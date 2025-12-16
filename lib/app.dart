@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:football/features/splash/splash_screen.dart';
+import 'package:football/core/navigation/app_router.dart';
 
-class Football extends StatelessWidget {
-  const Football({super.key});
+class Fitness extends StatelessWidget {
+  const Fitness({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen());
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: AppRouter.router,
+    );
   }
 }
