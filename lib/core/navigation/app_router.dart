@@ -4,6 +4,7 @@ import 'package:football/features/auth/ui/forget_password_screen.dart';
 import 'package:football/features/auth/ui/login_screen.dart';
 import 'package:football/features/auth/ui/register_screen.dart';
 import 'package:football/features/auth/ui/verify_email_screen.dart';
+import 'package:football/features/home/ui/home_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import 'app_route_constants.dart';
@@ -101,6 +102,25 @@ class AppRouter {
           return CustomTransitionPage(
             key: state.pageKey,
             child: ForgetPasswordScreen(),
+            transitionDuration: const Duration(milliseconds: 200),
+            transitionsBuilder: (
+              context,
+              animation,
+              secondaryAnimation,
+              child,
+            ) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          );
+        },
+      ),
+      GoRoute(
+        name: AppRouteConstants.home,
+        path: '/home',
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: HomeScreen(),
             transitionDuration: const Duration(milliseconds: 200),
             transitionsBuilder: (
               context,
