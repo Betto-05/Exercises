@@ -119,9 +119,9 @@ class _RegisterScreenBodyState extends ConsumerState<RegisterScreenBody> {
                       LoadingDialog.show(context);
 
                       await widget.authViewmodel.register(
+                        _fullNameController.text.trim(),
                         _emailController.text.trim(),
                         _passwordController.text.trim(),
-                        displayName: _fullNameController.text.trim(),
                       );
                       FocusScope.of(context).requestFocus(FocusNode());
 
@@ -129,7 +129,7 @@ class _RegisterScreenBodyState extends ConsumerState<RegisterScreenBody> {
                         LoadingDialog.hide(context);
                       } else {
                         LoadingDialog.hide(context);
-                        widget.authViewmodel.saveToken();
+
                         context.goNamed(
                           AppRouteConstants.validateEmailScreen,
                           queryParameters: {

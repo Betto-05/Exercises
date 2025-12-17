@@ -5,6 +5,7 @@ import 'package:football/core/constants/colors.dart';
 import 'package:football/core/functions/string_capitlizer.dart';
 import 'package:football/core/screens/exercieses_categories_list.dart';
 import 'package:football/core/screens/exercieses_list.dart';
+import 'package:football/features/favourites/ui/favourites_screen.dart';
 import 'package:football/features/home/ui/components/body_part.dart';
 import 'package:football/features/home/ui/components/equipment_card.dart';
 import 'package:football/features/home/ui/components/featured_exercised_card.dart';
@@ -20,6 +21,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    debugPrint('🐞 [HomeScreen] build() called');
     final state = ref.watch(homeViewModelProvider);
 
     return Scaffold(
@@ -30,6 +32,24 @@ class HomeScreen extends ConsumerWidget {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: AppColors.primary,
+        // ---------------------------------------------------------
+        // ADDED: Favorites Button in AppBar
+        // ---------------------------------------------------------
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite, color: Colors.white),
+            onPressed: () {
+              debugPrint(
+                '🐞 [HomeScreen] Favorites button clicked. Navigating to FavoritesScreen...',
+              );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FavoritesScreen()),
+              );
+            },
+          ),
+          const SizedBox(width: 8), // Little padding at the end
+        ],
       ),
       body:
           state.uiState == UiState.loading
@@ -48,20 +68,24 @@ class HomeScreen extends ConsumerWidget {
                     const SizedBox(height: 25),
                     SectionHeader(
                       title: "Body Parts",
-                      onSeeAll:
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (_) => ExerciesesCategoriesListScreen(
-                                    title: "Body Parts",
-                                    listEndpoint: EndPoints.bodyPartList,
-                                    getNextEndpoint:
-                                        (i) =>
-                                            "${EndPoints.getExercisesByBodyPart}$i",
-                                  ),
-                            ),
+                      onSeeAll: () {
+                        debugPrint(
+                          '🐞 [HomeScreen] "Body Parts" See All clicked',
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (_) => ExerciesesCategoriesListScreen(
+                                  title: "Body Parts",
+                                  listEndpoint: EndPoints.bodyPartList,
+                                  getNextEndpoint:
+                                      (i) =>
+                                          "${EndPoints.getExercisesByBodyPart}$i",
+                                ),
                           ),
+                        );
+                      },
                     ),
                     SizedBox(
                       height: 110,
@@ -116,6 +140,7 @@ class HomeScreen extends ConsumerWidget {
                         separatorBuilder: (_, __) => const SizedBox(width: 15),
                         itemBuilder:
                             (_, i) => FeaturedExerciseCard(
+                              width: 200,
                               exercise: state.featuredExercises[i],
                             ),
                       ),
@@ -193,6 +218,7 @@ class HomeScreen extends ConsumerWidget {
   }
 
   void _performSearch(BuildContext context, String query) {
+    debugPrint('🐞 [HomeScreen] Searching for: "$query"');
     if (query.isEmpty) return;
     Navigator.push(
       context,

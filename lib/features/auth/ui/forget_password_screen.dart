@@ -138,7 +138,7 @@ class _ForgetPasswordScreenBodyState
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       LoadingDialog.show(context);
-                      await authViewmodel.sendPasswordResetEmail(
+                      await authViewmodel.sendPasswordResetLink(
                         _emailController.text.trim(),
                       );
                       LoadingDialog.hide(context);

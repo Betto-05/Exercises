@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:football/core/api/end_points.dart';
 import 'package:football/core/functions/string_capitlizer.dart';
 import 'package:football/core/models/exercise.dart';
 import 'package:football/core/screens/exercise_details_screen.dart';
+// Ensure this import matches your project structure for the provider
+import 'package:football/features/favourites/ui/favourites_viewmodel.dart';
 
-class ExerciseGridCard extends StatelessWidget {
+class ExerciseGridCard extends ConsumerWidget {
   final ExerciseModel exercise;
   const ExerciseGridCard({super.key, required this.exercise});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // 1. Watch the provider to see if this exercise is in favorites
+    final favorites = ref.watch(favoritesProvider);
+    final isFav = favorites.any((e) => e.id == exercise.id);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -41,6 +48,7 @@ class ExerciseGridCard extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
+                    // ---------------- IMAGE ----------------
                     Image.network(
                       exercise.imageUrl720,
                       fit: BoxFit.cover,
@@ -48,17 +56,14 @@ class ExerciseGridCard extends StatelessWidget {
                         'X-RapidAPI-Key': EndPoints.apiKey,
                         'X-RapidAPI-Host': EndPoints.apiHost,
                       },
-
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
-
                         return const Center(
                           child: CircularProgressIndicator(strokeWidth: 2),
                         );
                       },
-
-                      // ✅ FALLBACK IMAGE IF ERROR
                       errorBuilder: (context, error, stackTrace) {
+                        // Fallback to GIF if Image fails
                         return Image.network(
                           exercise.gifUrl,
                           fit: BoxFit.cover,
@@ -79,6 +84,38 @@ class ExerciseGridCard extends StatelessWidget {
                           },
                         );
                       },
+                    ),
+
+                    // ---------------- HEART BUTTON ----------------
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: GestureDetector(
+                        onTap: () {
+                          // Toggle favorite
+                          ref
+                              .read(favoritesProvider.notifier)
+                              .toggleFavorite(exercise);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 4,
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            isFav ? Icons.favorite : Icons.favorite_border,
+                            color: isFav ? Colors.red : Colors.grey,
+                            size: 20,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

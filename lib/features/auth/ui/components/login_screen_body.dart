@@ -133,7 +133,6 @@ class _LoginScreenBodyState extends ConsumerState<LoginScreenBody> {
                       if (authViewmodel.state.isLoggedIn && user != null) {
                         if (firebaseUser != null &&
                             firebaseUser.emailVerified) {
-                          await authViewmodel.saveToken();
                           LoadingDialog.hide(context);
                           if (mounted) context.goNamed(AppRouteConstants.home);
                         } else if (firebaseUser != null) {
@@ -158,7 +157,6 @@ class _LoginScreenBodyState extends ConsumerState<LoginScreenBody> {
 
                 const SizedBox(height: 16),
 
-                // Register link
                 const Center(child: Register()),
                 const SizedBox(height: 10),
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:football/features/auth/ui/auth_viewmodel.dart';
 import 'package:football/features/auth/ui/forget_password_screen.dart';
 import 'package:football/features/auth/ui/login_screen.dart';
 import 'package:football/features/auth/ui/register_screen.dart';
@@ -83,7 +82,7 @@ class AppRouter {
           final email = state.uri.queryParameters['email'] ?? '';
           return CustomTransitionPage(
             key: state.pageKey,
-            child: VerifyEmailScreen(authViewmodel: AuthViewmodel(), email),
+            child: VerifyEmailScreen(email: email),
             transitionDuration: const Duration(milliseconds: 200),
             transitionsBuilder: (
               context,
