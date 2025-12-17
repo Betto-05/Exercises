@@ -1,7 +1,7 @@
 class EndPoints {
   static const String baseUrl = 'https://exercisedb.p.rapidapi.com';
   static const String apiKey =
-      '1b72214af9mshcc21786fce0b75cp15f9a7jsne17daf1dd4dc';
+      '5a901e8ac5msh6211492112fc976p193d22jsnda66db2be7c2';
   static const String apiHost = 'exercisedb.p.rapidapi.com';
 
   // Core Listings

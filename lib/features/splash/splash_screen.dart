@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:football/core/constants/colors.dart';
 import 'package:football/core/constants/images.dart';
+import 'package:football/core/navigation/app_route_constants.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,27 +16,30 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
+
+    // Animation
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
 
-    _scaleAnimation = Tween<double>(
-      begin: 0.5,
-      end: 1.0,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
     _fadeAnimation = Tween<double>(
       begin: 0,
       end: 1,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
 
     _controller.forward();
+
+    // ⏳ Delay 3 seconds then navigate
+    Timer(const Duration(seconds: 3), () {
+      if (!mounted) return;
+      context.goNamed(AppRouteConstants.login);
+    });
   }
 
   @override
@@ -53,10 +60,11 @@ class _SplashScreenState extends State<SplashScreen>
               opacity: _fadeAnimation,
               child: SizedBox(height: 200, child: Image.asset(AppImages.logo)),
             ),
+            const SizedBox(height: 16),
             FadeTransition(
               opacity: _fadeAnimation,
               child: const Text(
-                'Football',
+                'Exercise',
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
@@ -65,12 +73,9 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SizedBox(height: 40),
-            FadeTransition(
-              opacity: _fadeAnimation,
-              child: const CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 3,
-              ),
+            const CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 3,
             ),
           ],
         ),

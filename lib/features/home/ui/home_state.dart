@@ -1,29 +1,40 @@
 import 'package:football/core/models/exercise.dart';
-import 'package:football/core/utils/ui_state.dart';
+
+enum UiState { loading, data, error }
 
 class HomeState {
-  final UiState? uiState;
-  final List<String>? bodyParts;
-  final List<String>? equipmentList;
-  final List<ExerciseModel>? exercisesList;
+  final UiState uiState;
+  final List<String> bodyParts;
+  final List<String> equipment;
+  final List<ExerciseModel> featuredExercises;
 
   const HomeState({
-    this.bodyParts,
-
-    this.uiState = UiState.loading,
-    this.equipmentList,
-    this.exercisesList,
+    required this.uiState,
+    required this.bodyParts,
+    required this.equipment,
+    required this.featuredExercises,
   });
-  HomeState copywith({
+
+  factory HomeState.initial() {
+    return const HomeState(
+      uiState: UiState.loading,
+      bodyParts: [],
+      equipment: [],
+      featuredExercises: [],
+    );
+  }
+
+  HomeState copyWith({
     UiState? uiState,
-    bool? fetchYearsDataSuccessfully,
-    List<String>? yearNames,
+    List<String>? bodyParts,
+    List<String>? equipment,
+    List<ExerciseModel>? featuredExercises,
   }) {
     return HomeState(
       uiState: uiState ?? this.uiState,
-      bodyParts: bodyParts ?? bodyParts,
-      equipmentList: equipmentList ?? equipmentList,
-      exercisesList: exercisesList ?? exercisesList,
+      bodyParts: bodyParts ?? this.bodyParts,
+      equipment: equipment ?? this.equipment,
+      featuredExercises: featuredExercises ?? this.featuredExercises,
     );
   }
 }

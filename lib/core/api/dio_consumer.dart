@@ -12,7 +12,7 @@ class DioConsumer extends ApiConsumer {
       ..responseType = ResponseType.json
       ..followRedirects = false
       ..headers = {
-        'X-RapidAPI-Key': "1b72214af9mshcc21786fce0b75cp15f9a7jsne17daf1dd4dc",
+        'X-RapidAPI-Key': "5a901e8ac5msh6211492112fc976p193d22jsnda66db2be7c2",
         'X-RapidAPI-Host': "exercisedb.p.rapidapi.com",
       };
     dio.options.receiveDataWhenStatusError = true;
@@ -22,7 +22,7 @@ class DioConsumer extends ApiConsumer {
 
   void setRapidApiKey() {
     dio.options.headers["X-RapidAPI-Key"] =
-        "1b72214af9mshcc21786fce0b75cp15f9a7jsne17daf1dd4dc";
+        "5a901e8ac5msh6211492112fc976p193d22jsnda66db2be7c2";
     dio.options.headers["X-RapidAPI-Host"] = "exercisedb.p.rapidapi.com";
   }
 
