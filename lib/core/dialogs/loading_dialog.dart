@@ -3,7 +3,7 @@ import 'package:football/core/constants/animated_icons.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadingDialog {
-  static void show(BuildContext context, {String message = "جاري التحميل..."}) {
+  static void show(BuildContext context, {String message = "Loading..."}) {
     showDialog(
       context: context,
       barrierDismissible: false, // لا يمكن إغلاقه بالضغط خارج النافذة

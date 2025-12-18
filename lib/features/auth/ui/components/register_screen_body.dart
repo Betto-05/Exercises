@@ -130,12 +130,7 @@ class _RegisterScreenBodyState extends ConsumerState<RegisterScreenBody> {
                       } else {
                         LoadingDialog.hide(context);
 
-                        context.goNamed(
-                          AppRouteConstants.validateEmailScreen,
-                          queryParameters: {
-                            'email': _emailController.text.trim(),
-                          },
-                        );
+                        context.goNamed(AppRouteConstants.home);
                       }
                     }
                   },

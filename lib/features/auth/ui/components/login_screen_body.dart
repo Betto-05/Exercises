@@ -131,30 +131,21 @@ class _LoginScreenBodyState extends ConsumerState<LoginScreenBody> {
                       });
 
                       if (authViewmodel.state.isLoggedIn && user != null) {
-                        if (firebaseUser != null &&
-                            firebaseUser.emailVerified) {
-                          LoadingDialog.hide(context);
-                          if (mounted) context.goNamed(AppRouteConstants.home);
-                        } else if (firebaseUser != null) {
-                          await _handleEmailNotVerified(firebaseUser);
-                          LoadingDialog.hide(context);
-                        } else {
-                          LoadingDialog.hide(context);
-                        }
+                        LoadingDialog.hide(context);
+                        context.goNamed(AppRouteConstants.home);
                       } else {
                         LoadingDialog.hide(context);
-                        if (mounted) {}
                       }
                     } catch (e) {
                       LoadingDialog.hide(context);
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        FocusScope.of(context).unfocus();
-                      });
-                      if (mounted) {}
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Login failed: ${e.toString()}'),
+                        ),
+                      );
                     }
                   },
                 ),
-
                 const SizedBox(height: 16),
 
                 const Center(child: Register()),
